@@ -1,6 +1,7 @@
 import { Component, ViewChild, ElementRef, OnInit, HostListener } from '@angular/core';
-import { Game } from './game/game';
 import { KeyDownHandler } from './local/handler/keyDownHandler';
+import { Player } from './player/player';
+import { LocalGame } from './local/game/localGame';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,7 @@ import { KeyDownHandler } from './local/handler/keyDownHandler';
 })
 export class AppComponent implements OnInit {
   @ViewChild('gameCanvas') gameCanvas: ElementRef;
-  public game: Game;
+  public game: LocalGame;
 
   private get elementHTMLCanvas(): HTMLCanvasElement {
     return this.gameCanvas.nativeElement as HTMLCanvasElement;
@@ -18,11 +19,22 @@ export class AppComponent implements OnInit {
   constructor(private eventHandler: KeyDownHandler) { }
 
   ngOnInit(): void {
-    this.game = new Game(this.elementHTMLCanvas);
+
+    let player = new Player();
+
+    player = new Player();
+    player.name = 'Vitor';
+    player.position = {
+      X: 50,
+      Y: 50
+    };
+
+    this.game = new LocalGame(player, this.elementHTMLCanvas);
     this.game.createGame();
   }
 
   @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
-    this.game.movePlayer(event.key);
+    const player = this.game.player as Player;
+    this.eventHandler.keyDownEvent({ direction: event.key, player: player });
   }
 }
