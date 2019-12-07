@@ -1,1 +1,11 @@
 <canvas #gameCanvas></canvas>
+<audio #gameSongs id="audio" style="visibility:hidden" src="/assets/engine.mp3" controls></audio>
+
+<fieldset>
+  Volume: {{ volume }}
+  <input type="button" value="Volume up" (click)="VolumeUp()">
+  <input type="button" value="Volume down" (click)="VolumeDown()">
+  <span> | </span>
+  <input type="button" value="Audio on" (click)="AudioOn()">
+  <input type="button" value="Audio off" (click)="AudioOff()">
+</fieldset>

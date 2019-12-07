@@ -13,7 +13,7 @@ export class KeyDownHandler {
     this.keyDownListener = new EventEmitter();
   }
 
-  public keyDownEvent(command: { direction: string, player?: Player }) {   
+  public keyDownEvent(command: { direction: string, player?: Player }) {
     (this.keyDownListener as EventEmitter<{ direction: string, player?: Player }>).emit(command);
   }
 }

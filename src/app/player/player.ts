@@ -1,4 +1,4 @@
-import { Position } from './position';
+import { Position } from '../common/position';
 
 export class Player {
   public name = '';
@@ -10,7 +10,7 @@ export class Player {
     Y: 0
   };
 
-  public icon = '\uf1b9';
+  public icon = '\uf1ba';
 
   constructor() { }
 }

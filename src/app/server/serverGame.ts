@@ -1,25 +1,41 @@
-import { Game } from "../game/game";
-import { Player } from "../player/player";
+import { Game } from '../game/game';
+import { IPerson } from '../people/common/IPerson';
+import { Male } from '../people/male';
+import { Female } from '../people/female';
+import { Player } from '../player/player';
 
-export class serverGame extends Game {      
+export class ServerGame extends Game {
 
-    constructor(elementHTMLCanvas : HTMLCanvasElement) {
-        super(elementHTMLCanvas);        
-    }    
+  constructor(elementHTMLCanvas: HTMLCanvasElement) {
+    super(elementHTMLCanvas);
+  }
 
-    private ArrowUp = (player: Player) => {
-        player.position.Y -= ((player.position.Y - player.speed) >= 10) ? player.speed : 0;
+  public gameStart = (players: Array<Player>,
+    people: Array<IPerson | Male | Female>) => {
+
+    this.people = people;
+    this.players = players;
+
+    this.populateScreen(5000);
+  }
+
+  private populateScreen = (interval: number) => {
+    setInterval(() => {
+      this.people.push(this.getNewPerson());
+    }, interval);
+
+  }
+
+  private getNewPerson = (): IPerson => {
+    let people: IPerson;
+
+    if (Math.round(Math.random()) === 1) {
+      people = new Male();
+    } else {
+      people = new Female();
     }
 
-    private ArrowDown = (player: Player) => {
-        player.position.Y += ((player.position.Y + player.speed) <= this.canvasElement.height) ? player.speed : 0;
-    }
-
-    private ArrowLeft = (player: Player) => {
-        player.position.X -= ((player.position.X - player.speed) >= 0) ? player.speed : 0;
-    }
-
-    private ArrowRight = (player: Player) => {
-        player.position.X += ((player.position.X + player.speed) < (this.canvasElement.width - 10)) ? player.speed : 0;
-    }
+    people.position = this.canvas.getRandomPosition();
+    return people;
+  }
 }
