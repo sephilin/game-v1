@@ -1,11 +1,46 @@
-<canvas #gameCanvas></canvas>
-<audio #gameSongs id="audio" style="visibility:hidden" src="/assets/engine.mp3" controls></audio>
+<style>
+  .game-title h2 {
+    font-weight: 1000;
+  }
+</style>
 
-<fieldset>
-  Volume: {{ volume }}
-  <input type="button" value="Volume up" (click)="VolumeUp()">
-  <input type="button" value="Volume down" (click)="VolumeDown()">
-  <span> | </span>
-  <input type="button" value="Audio on" (click)="AudioOn()">
-  <input type="button" value="Audio off" (click)="AudioOff()">
-</fieldset>
+<div class="container">
+  <div class="row">
+    <div class="col col-sm-6 game-title text-center">
+      <h2>Crazy Taxi (beta)</h2>
+    </div>
+    <div class="col col-sm-4 text-center">
+      <h4>Status</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col col-sm-6">
+      <div class="game-screen">
+        <canvas #gameCanvas></canvas>
+      </div>
+    </div>
+    <div class="col col-sm-4">
+      <div class="row">
+        <div class="col col-sm-12">
+          <div class="panel">
+            Id: <input type="text" class="pull-right" readonly="readonly" value="{{game.player.id}}">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col col-sm-12">
+          <div class="panel">
+            Points: <input type="text" class="pull-right" readonly="readonly" value="{{game.player.points}}">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col col-sm-12">
+          <div class="panel">
+            Jogador: <input type="text" class="pull-right" value="{{game.player.name}}">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

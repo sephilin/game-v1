@@ -1,16 +1,16 @@
+import { EventHandler } from 'src/app/common/handlerEvent/handlerEvent';
 import { Player } from '../player/player';
 import { Canvas } from '../local/canvas/canvas';
 import { Male } from '../people/male';
 import { Female } from '../people/female';
 import { IPerson } from '../people/common/IPerson';
-import { CollisionHandler } from '../local/handler/collisionHandler';
 
 export class Game {
   public canvas: Canvas;
   public players: Array<Player> = [];
   public people: Array<IPerson | Male | Female> = [];
 
-  constructor(public canvasElement: HTMLCanvasElement, private collisionHandler?: CollisionHandler) {
+  constructor(public canvasElement: HTMLCanvasElement, private eventHandler?: EventHandler) {
     this.canvas = new Canvas(this.canvasElement);
   }
 
@@ -19,29 +19,29 @@ export class Game {
       this.people.forEach(people => {
         const d = this.CalcDistance(player.position.X, player.position.Y, people.position.X, people.position.Y);
         if (d <= this.canvas.getIconSize() / 2) {
-          this.collisionHandler.collisionEvent(people);
+          this.eventHandler.emit('OnCollision', people);
           this.people = this.people.filter(p => p.id !== people.id);
         }
       });
     });
   }
 
-  private ArrowUp = (player: Player) => {
+  public MovePlayerUp = (player: Player) => {
     player.position.Y -= ((player.position.Y - player.speed) >= 10) ? player.speed : 0;
     this.validateCollision();
   }
 
-  private ArrowDown = (player: Player) => {
+  public MovePlayerDown = (player: Player) => {
     player.position.Y += ((player.position.Y + player.speed) <= this.canvasElement.height) ? player.speed : 0;
     this.validateCollision();
   }
 
-  private ArrowLeft = (player: Player) => {
+  public MovePlayerLeft = (player: Player) => {
     player.position.X -= ((player.position.X - player.speed) >= 0) ? player.speed : 0;
     this.validateCollision();
   }
 
-  private ArrowRight = (player: Player) => {
+  public MovePlayerRight = (player: Player) => {
     player.position.X += ((player.position.X + player.speed) < (this.canvasElement.width - 10)) ? player.speed : 0;
     this.validateCollision();
   }

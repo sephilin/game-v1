@@ -1,11 +1,9 @@
-
 import { Component, ViewChild, ElementRef, OnInit, HostListener } from '@angular/core';
-import { KeyDownHandler } from './local/handler/keyDownHandler';
 import { Player } from './player/player';
-import { LocalGame } from './local/game/localGame';
-import { CollisionHandler } from './local/handler/collisionHandler';
 import { SoundsService } from './local/sounds/sounds';
-import { ServerGame } from './server/serverGame';
+import { EventHandler } from './common/handlerEvent/handlerEvent';
+import { Command } from './common/command';
+import { LocalGame } from './local/game/localGame';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +12,6 @@ import { ServerGame } from './server/serverGame';
 })
 export class AppComponent implements OnInit {
   @ViewChild('gameCanvas') gameCanvas: ElementRef;
-  @ViewChild('gameSongs') gameSongs: ElementRef;
 
   public game: LocalGame;
 
@@ -22,17 +19,8 @@ export class AppComponent implements OnInit {
     return this.gameCanvas.nativeElement as HTMLCanvasElement;
   }
 
-  private get elementHTMLAudio(): HTMLAudioElement {
-    return this.gameSongs.nativeElement as HTMLAudioElement;
-  }
-
-  public get volume(): string {
-    return (this.elementHTMLAudio.volume).toFixed(2);
-  }
-
-  constructor(private eventHandler: KeyDownHandler,
-    private collisionHandler: CollisionHandler,
-    private soundsService: SoundsService
+  constructor(private soundsService: SoundsService,
+    private evtHandler: EventHandler
   ) { }
 
   ngOnInit(): void {
@@ -46,45 +34,17 @@ export class AppComponent implements OnInit {
       Y: 50
     };
 
-    this.collisionHandler.colissionListener.subscribe((person) => {
-      this.soundsService.launchSound(person);
-    });
+    this.evtHandler.registerEvent(new Command('OnCollision', this.launchSounds));
 
-    this.elementHTMLAudio.addEventListener('ended', this.loop, false);
-
-    this.game = new LocalGame(player, this.elementHTMLCanvas, this.eventHandler, this.collisionHandler);
+    this.game = new LocalGame(player, this.elementHTMLCanvas, this.evtHandler);
     this.game.createGame();
   }
 
-
-
-  public VolumeUp() {
-    if (Number.parseFloat(this.elementHTMLAudio.volume.toFixed(2)) < 1) {
-      this.elementHTMLAudio.volume += 0.05;
-    }
-  }
-
-  public VolumeDown() {
-    if (Number.parseFloat(this.elementHTMLAudio.volume.toFixed(2)) > 0.05) {
-      this.elementHTMLAudio.volume -= 0.05;
-    }
-  }
-
-  public AudioOff() {
-    this.elementHTMLAudio.pause();
-  }
-
-  public AudioOn() {
-    this.loop();
-  }
-
-  private loop = () => {
-    this.elementHTMLAudio.play();
+  private launchSounds = (person) => {
+    this.soundsService.launchSound(person);
   }
 
   @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
-    const player = this.game.player as Player;
-    const command = { direction: event.key, player: player };
-    this.eventHandler.keyDownEvent(command);
+    this.evtHandler.emit(event.key);
   }
 }

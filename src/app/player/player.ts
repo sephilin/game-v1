@@ -4,6 +4,7 @@ export class Player {
   public name = '';
   public id = 0;
   public speed = 5;
+  public points = 0;
 
   position: Position = {
     X: 0,
