@@ -2,7 +2,7 @@ import { Position } from '../common/position';
 
 export class Player {
   public name = '';
-  public id = 0;
+  public id = '';
   public speed = 5;
   public points = 0;
 
