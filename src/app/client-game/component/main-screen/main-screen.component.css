@@ -1,0 +1,14 @@
+.music-button{
+  cursor: pointer;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.music-button .music-on{
+  color: greenyellow;
+}
+
+.music-button .music-off{
+  color: red;
+}
+
+

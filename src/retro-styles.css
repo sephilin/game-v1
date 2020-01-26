@@ -1,0 +1,173 @@
+@import url('https://fonts.googleapis.com/css?family=Cormorant+SC:500&display=swap');
+@import url(https://fonts.googleapis.com/css?family=VT323);
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background: rgba(10, 10, 10, 1);
+    color: rgba(0, 250, 0, 1);
+    font-family: 'VT323';
+    font-size: 24px;
+    -webkit-font-smoothing: none;
+    line-height: 1.2;
+}
+
+#loading-screen {
+    font-family: 'Cormorant SC', serif;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 1);
+    color: rgba(5, 5, 5, 1);
+    position: fixed;
+}
+
+#loading-screen h1 {
+    display: table;
+    margin-top: 40vh;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.heading {
+    width: 100%;
+}
+
+h1 {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+}
+
+p {
+    margin-bottom: 2rem;
+}
+
+a,
+a:visited {
+    border-bottom: 0.2rem solid rgba(0, 250, 0, 1);
+    color: rgba(0, 250, 0, 1);
+    text-decoration: none;
+}
+
+a:active,
+a:focus,
+a:hover {
+    background-color: rgba(0, 250, 0, 1);
+    color: rgba(0, 50, 0, 1);
+}
+
+
+/* basic screen module */
+
+.piece {
+    display: block;
+    height: 100%;
+    left: 0;
+    top: 0;
+    width: 100%;
+}
+
+
+/* prevent clicks */
+
+.noclick {
+    pointer-events: none;
+}
+
+
+/* screen bevel */
+
+.frame {
+    background-color: transparent;
+    border-radius: 2rem;
+    border: 1rem solid;
+    border-bottom-color: #121212;
+    border-left-color: rgba(20, 20, 20, 1);
+    border-right-color: rgba(20, 20, 20, 1);
+    border-top-color: rgba(5, 5, 5, 1);
+    box-shadow: inset 0 0 18rem black, inset 0 0 3rem black, 0 0 10rem black;
+    height: 96%;
+    position: absolute;
+    top: 2%;
+    left: 2%;
+    width: 96%;
+    pointer-events: none;
+}
+
+
+/* manufacturer's emblem */
+
+.emblem {
+    display: none;
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    font-size: 2rem;
+    height: 3rem;
+    width: 3rem;
+    text-align: center;
+    color: white;
+    background: -webkit-linear-gradient(#fff, #555);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0.1rem 0rem rgba(0, 0, 0, 0.4), 0 0 2rem rgba(0, 0, 0, 0.8);
+    transform: translate(-50%);
+}
+
+
+/* screen output */
+
+.output {
+    animation: crt-output 10ms infinite;
+    background-color: rgba(0, 50, 0, 1);
+    overflow-y: scroll;
+    overflow-x: hidden;
+    position: absolute;
+    padding: 3rem 2rem;
+    pointer-events: auto;
+    text-shadow: 0rem 0.2rem 1rem lighten(rgba(0, 50, 0, 1), 20%);
+    z-index: -1
+}
+
+@keyframes crt-output {
+    0% {
+        opacity: 0.9;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+
+/* chunky scanlines */
+
+.scanlines {
+    background: linear-gradient( to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.2) 70%, rgba(0, 0, 0, 0.6));
+    background-size: 100% 0.3rem;
+    border-radius: 2rem;
+    position: absolute;
+}
+
+
+/* screen glow */
+
+.glow {
+    animation: crt-glow 60s infinite;
+    background: radial-gradient(circle at center, rgba(27, 212, 89, 1) 0%, rgba(27, 212, 89, 0.88) 58%, rgba(21, 235, 92, 0.57) 80%, rgba(19, 94, 29, 0.27) 93%, rgba(10, 23, 12, 0) 100%);
+    /* filter: blur(10rem) opacity(0.1); */
+    opacity: 0.15;
+    pointer-events: none;
+    position: fixed;
+}
+
+@keyframes crt-glow {
+    0% {
+        opacity: 0.1;
+    }
+    50% {
+        opacity: 0.2;
+    }
+}

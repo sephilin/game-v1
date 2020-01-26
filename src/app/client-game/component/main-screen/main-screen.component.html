@@ -1,0 +1,25 @@
+<main class="nintendo-switch">
+  <aside class="actions left">
+    <div class="buttons">
+      <button data-arrow="ArrowLeft" directive-click-button></button>
+      <button data-arrow="ArrowUp" directive-click-button></button>
+      <button data-arrow="ArrowRight" directive-click-button></button>
+      <button data-arrow="ArrowDown" directive-click-button></button>
+    </div>
+  </aside>
+  <label class="middle" for="screen">
+    <ng-content>
+    </ng-content>
+    <div class="glass"></div>
+    <!-- <span>Click here to start
+    </span> -->
+
+  </label>
+  <aside class="actions right">
+    <div class="buttons">
+      <button>X</button>
+      <button>O</button>
+    </div>
+    <div (click)="toggleBackgroundSong()" class="circle music-button"> &nbsp; <b>MUSIC <span #statusBGSong class="music-on"></span></b></div>
+  </aside>
+</main>
